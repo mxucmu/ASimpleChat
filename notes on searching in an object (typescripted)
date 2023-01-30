@@ -1,0 +1,44 @@
+interface Contact {
+  id: number;
+  name: string;
+  status: ContactStatus;
+  address: Address;
+  email: string;
+}
+
+type ContactQuery = Omit<
+  Partial<
+    <keyof Contact, Query>
+  >,
+  "address" | "status"
+>; // can also use Pick, Required
+
+interface Query<TProp> {
+  sort?: 'asc' | 'desc';
+  matches(vals: TProp): boolean;
+}
+
+// The above definition can be replaced by extracting metadata from existing types
+type ContactQuery = {
+  [TProp in keyof Contact]?: Query<Contact[TProp]>
+}
+
+function searchContacts(contacts: Contact[], query: ContactQuery) {
+  return contacts.filter(contact => {
+    for (const property of Object.keys(contact) as (keyof Contact)[]) {
+      const propertyQuery = query[property] as Query<Contact[keyof Contact]>;
+      if (propertyQuery && propertyQuery.matches(contact[property])) {
+        return true;
+      }
+    }
+    return false;
+  })
+}
+
+const filteredContacts = searchContacts(
+  [/* contacts */],
+  {
+    id: { matches: (id) => id === 123 },
+    name: { matches: (name) => name === "Carol Weaver" },
+  }
+);

@@ -1,4 +1,4 @@
-This is a simple chat built with Nestjs + React + MaterialUI
+This is a simple chat built with Nestjs(Backend) + React(Frontend) + MaterialUI
 
 Backend command: npm run start:dev
 

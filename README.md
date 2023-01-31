@@ -1,6 +1,6 @@
 This is a simple chat built with Nestjs(Backend) + React(Frontend) + MaterialUI
 
-To install Nodes dipendencies run: npm install in both backend and reactChat directories.
+To install Nodes dipendencies run "npm install" in both backend and react_chat directories.
 
 Backend command: npm run start:dev
 
